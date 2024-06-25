@@ -24,19 +24,60 @@ const create = async (req, res) => {
   }
 };
 
-const destroy = async (req, res) => {
+const signIn = async (req, res) => {
   try {
-    const response = await userService.destroy({});
+    const response = await userService.SignIn(
+      req.body.email,
+      req.body.password
+    );
     return res.status(201).json({
       data: response,
-      message: "User created",
+      message: "User loggedin",
       success: true,
       err: {},
     });
   } catch (error) {
     return res.status(500).json({
       data: {},
-      message: "User not created",
+      message: "User not loggedin",
+      success: false,
+      err: error,
+    });
+  }
+};
+
+const destroy = async (req, res) => {
+  try {
+    const response = await userService.destroy(req.params.id);
+    return res.status(201).json({
+      data: response,
+      message: "User deleted",
+      success: true,
+      err: {},
+    });
+  } catch (error) {
+    return res.status(500).json({
+      data: {},
+      message: "User not deleted",
+      success: false,
+      err: error,
+    });
+  }
+};
+
+const getById = async (req, res) => {
+  try {
+    const response = await userService.getById(req.params.id);
+    return res.status(201).json({
+      data: response,
+      message: "User Fetched",
+      success: true,
+      err: {},
+    });
+  } catch (error) {
+    return res.status(500).json({
+      data: {},
+      message: "User not Fetched",
       success: false,
       err: error,
     });
@@ -45,4 +86,7 @@ const destroy = async (req, res) => {
 
 module.exports = {
   create,
+  getById,
+  destroy,
+  signIn,
 };
