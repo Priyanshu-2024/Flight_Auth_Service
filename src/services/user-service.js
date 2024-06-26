@@ -104,6 +104,15 @@ class UserService {
       throw error;
     }
   }
+
+  isAdmin(UserId) {
+    try {
+      return this.userRepository.isAdmin(UserId);
+    } catch (error) {
+      console.log("something went wrong in the Service Layer", error);
+      throw error;
+    }
+  }
 }
 
 module.exports = UserService;
